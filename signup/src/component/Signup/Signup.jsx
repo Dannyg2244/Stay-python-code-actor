@@ -36,6 +36,8 @@ const Signup = () => {
       alert("please accept the terms and conditions");
     } else if (!matchPassword.match(password)) {
       alert("Passwords does not match!");
+    } else if (matchPassword.length !== password.length) {
+      alert("Passwords does not match!");
     } else {
       alert(`Dear ${name}, Your account has been created!`);
     }
