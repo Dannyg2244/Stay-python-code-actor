@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import PasswordChecklist from "react-password-checklist";
 
 const Signup = () => {
-  const [passwordType, setPasswordType] = useState("password");
+  const [passwordTcdype, setPasswordType] = useState("password");
   const [confirmPasswordType, setConfirmPasswordType] = useState("password");
   const [passwordInput, setPasswordInput] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [error, setError] = useState("");
   const [password, setPassword] = useState("");
   const [matchPassword, setMatchPassword] = useState("");
   const [name, setName] = useState("");
@@ -23,6 +23,7 @@ const Signup = () => {
   };
   const onSubmitHandler = (event) => {
     event.preventDefault();
+
     if (name.trim() === "") {
       document.getElementById("userName").style.border = "3px solid red";
     } else if (email.trim() === "") {
@@ -33,6 +34,8 @@ const Signup = () => {
       document.getElementById("coPassword").style.border = "3px solid red";
     } else if (!check === true) {
       alert("please accept the terms and conditions");
+    } else if (!matchPassword.match(password)) {
+      alert("Passwords does not match!");
     } else {
       alert(`Dear ${name}, Your account has been created!`);
     }
@@ -59,6 +62,20 @@ const Signup = () => {
     }
   };
 
+  function handleSetMatchPassword(event) {
+    setMatchPassword(event.target.value);
+    let match_pass = event.target.value;
+    setMatchPassword(match_pass);
+
+    if (!match_pass.match(password)) {
+      setError("Passwords does not match!");
+    } else if (match_pass.length !== password.length) {
+      setError("Passwords does not match!");
+    } else {
+      setError("Passwords match!");
+    }
+  }
+
   const togglePassword = () => {
     if (passwordType === "password") {
       setPasswordType("text");
@@ -73,10 +90,6 @@ const Signup = () => {
     }
     setConfirmPasswordType("password");
   };
-
-  function handleSetMatchPassword(event) {
-    setMatchPassword(event.target.value);
-  }
 
   return (
     <div>
@@ -122,15 +135,7 @@ const Signup = () => {
                 />
               </div>
             </div>
-            {/* <div className="flex justify-center pt-[2rem]">
-              <input
-                className="outline-none w-[94%]  bg-transparent border-2 border-blue-800 rounded-full placeholder:text-black p-[.5rem] pl-4"
-                type="name"
-                placeholder="username"
-                name="username"
-                autoComplete="off"
-              />
-            </div> */}
+
             <div className="flex justify-center pt-[2rem] relative">
               <input
                 type={passwordType}
@@ -185,16 +190,7 @@ const Signup = () => {
                 </button>
               </div>
             </div>
-            <PasswordChecklist
-              rules={["match"]}
-              minLength={8}
-              value={password}
-              valueAgain={matchPassword}
-              className=" text-[.6rem]"
-              messages={{
-                match: "Passwords should match.",
-              }}
-            />
+            <div className="pl-6 pt-2 text-red-500 text-[.8rem]"> {error} </div>
 
             <div className="flex gap-2 pl-4 pt-8 ">
               <input
@@ -222,7 +218,7 @@ const Signup = () => {
                 onClick={(event) => {
                   onSubmitHandler(event);
                 }}
-                className="p-[.4rem] w-[94%] bg-gradient-to-r from-[#fc0543] to-[#ff558e] rounded text-white font-[600] "
+                className="py-[.6rem] w-[94%] bg-gradient-to-r from-[#fc0543] to-[#ff558e] rounded-full text-white font-[600] "
               >
                 Sign Up
               </button>
