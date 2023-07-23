@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 const Signup = () => {
-  const [passwordTcdype, setPasswordType] = useState("password");
+  const [passwordType, setPasswordType] = useState("password");
   const [confirmPasswordType, setConfirmPasswordType] = useState("password");
   const [passwordInput, setPasswordInput] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
