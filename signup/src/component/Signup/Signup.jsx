@@ -1,10 +1,17 @@
+import { clear } from "@testing-library/user-event/dist/clear";
 import React, { useState } from "react";
+import PasswordChecklist from "react-password-checklist";
 
 const Signup = () => {
   const [passwordType, setPasswordType] = useState("password");
   const [confirmPasswordType, setConfirmPasswordType] = useState("password");
   const [passwordInput, setPasswordInput] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [errorr, setErrorr] = useState("");
+  const [errorE, setErrorE] = useState("");
+  const [errorP, setErrorP] = useState("");
+  const [errorC, setErrorC] = useState("");
+  const [errorT, setErrorT] = useState("");
   const [error, setError] = useState("");
   const [password, setPassword] = useState("");
   const [matchPassword, setMatchPassword] = useState("");
@@ -23,17 +30,23 @@ const Signup = () => {
   };
   const onSubmitHandler = (event) => {
     event.preventDefault();
+    //let match_pass = event.target.value;
+    //setMatchPassword(match_pass);
 
     if (name.trim() === "") {
+      setErrorr("Username is required");
       document.getElementById("userName").style.border = "3px solid red";
     } else if (email.trim() === "") {
+      setErrorE("Email is required");
       document.getElementById("email").style.border = "3px solid red";
     } else if (password.trim() === "") {
+      setErrorP("Password is required");
       document.getElementById("passWord").style.border = "3px solid red";
     } else if (matchPassword.trim() === "") {
+      setErrorC("Confirm password is required");
       document.getElementById("coPassword").style.border = "3px solid red";
     } else if (!check === true) {
-      alert("please accept the terms and conditions");
+      setErrorT("please accept the terms and conditions");
     } else if (!matchPassword.match(password)) {
       alert("Passwords does not match!");
     } else if (matchPassword.length !== password.length) {
@@ -60,7 +73,7 @@ const Signup = () => {
     } else if (new_pass.length < 10) {
       setErrorMessage("Password length should be more than 10.");
     } else {
-      setErrorMessage("Password is strong!");
+      setErrorMessage(<p className="text-green-500">Password is strong!</p>);
     }
   };
 
@@ -69,12 +82,18 @@ const Signup = () => {
     let match_pass = event.target.value;
     setMatchPassword(match_pass);
 
+    // if (match_pass.length > 2) {
+    //   setError(error);
+    // } else {
+    //   clear(error);
+    // }
+
     if (!match_pass.match(password)) {
       setError("Passwords does not match!");
     } else if (match_pass.length !== password.length) {
       setError("Passwords does not match!");
     } else {
-      setError("Passwords match!");
+      setError(<p className="text-green-500">Ok!</p>);
     }
   }
 
@@ -122,6 +141,10 @@ const Signup = () => {
                   }}
                 />
               </div>
+              <div className="pl-6 pt-2 text-red-500 text-[.8rem]">
+                {" "}
+                {name.length > 1 ? "" : errorr}
+              </div>
               <div className="flex justify-center">
                 <input
                   className="mt-8 outline-none bg-transparent border-[3px] text-white border-[#f81d78] placeholder:text-white rounded-full focus:bg-transparent  placeholder:font-[600] p-[.5rem] pl-4  w-[94%]"
@@ -136,8 +159,19 @@ const Signup = () => {
                   }}
                 />
               </div>
+              <div className="pl-6 pt-2 text-red-500 text-[.8rem]">
+                {email.length > 1 ? "" : errorE}
+              </div>
             </div>
-
+            {/* <div className="flex justify-center pt-[2rem]">
+              <input
+                className="outline-none w-[94%]  bg-transparent border-2 border-blue-800 rounded-full placeholder:text-black p-[.5rem] pl-4"
+                type="name"
+                placeholder="username"
+                name="username"
+                autoComplete="off"
+              />
+            </div> */}
             <div className="flex justify-center pt-[2rem] relative">
               <input
                 type={passwordType}
@@ -164,8 +198,10 @@ const Signup = () => {
               </div>
             </div>
             <div className="pl-6 pt-2 text-red-500 text-[.8rem]">
-              {" "}
-              {errorMessage}{" "}
+              {password.length > 1 ? " " : errorP}
+            </div>
+            <div className="pl-6 pt-2 text-red-500 text-[.8rem]">
+              {password.length > 2 ? errorMessage : ""}
             </div>
             <div className="flex justify-center pt-[2rem] relative">
               <input
@@ -192,8 +228,14 @@ const Signup = () => {
                 </button>
               </div>
             </div>
-            <div className="pl-6 pt-2 text-red-500 text-[.8rem]"> {error} </div>
+            <div className="pl-6 pt-2 text-red-500 text-[.8rem]">
+              {matchPassword.length > 1 ? " " : errorC}
+            </div>
+            <div className="pl-6 pt-2 text-red-500 text-[.8rem]">
+              {matchPassword.length > 2 ? error : ""}
+            </div>
 
+           
             <div className="flex gap-2 pl-4 pt-8 ">
               <input
                 className="w-[16px]"
@@ -213,6 +255,9 @@ const Signup = () => {
                   condition
                 </a>
               </p>
+            </div>
+            <div className="pl-6 pt-2 text-red-500 text-[.8rem]">
+              {check == true ? "" : errorT}
             </div>
             <div className="flex justify-center pt-[3rem] ">
               <button
