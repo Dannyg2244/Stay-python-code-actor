@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 const Navbar = () => {
   return (
     <header className="flex justify-between px-20 border-t border-b border-[#D9D9D9]">
-      <div className="flex text-[13px] font-bold">
+      <div className="flex text-[13px] font-bold items-center">
         <p className="flex items-center gap-2 border-l border-r border-[#D9D9D9] py-3 px-4">
           <BsFillTelephoneFill className="text-[#F56411]" />
           <span>(+234) 804 909 000</span>
